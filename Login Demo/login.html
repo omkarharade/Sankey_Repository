@@ -25,10 +25,12 @@
                 <h2 class="bold-text">Login to your account</h2>
 
                 <label class="grey-text">Email</label>
-                <input type="email" placeholder="    John.snow@gmail.com">
+                <input onkeypress="checkEmailFunc()" id = "email" type="email" placeholder="    John.snow@gmail.com">
+                <p style="color: red;" id="email-alert"></p>
 
                 <label class="grey-text">Password</label>
-                <input type="password" placeholder="    *********">
+                <input id = "password" type="password" placeholder="    *********">
+                <p style="color: red;" id="password-alert"></p>
 
                 <div class="password-recover-wrapper">
                     <input type="radio">
@@ -36,17 +38,18 @@
                     <a  class="link-class" href="">Forgot password ?</a>
                 </div>
                 <div style="display: flex; flex-direction: row;">
-                    <button class="login-btn white-text">Login now</button>
+                    <button class="login-btn white-text" onclick="loginBtnClick()">Login now</button>
                     <button class="signin-btn white-text"> <img style="padding-right: 5px;" width="20" height="20" src="https://img.icons8.com/fluency/20/google-logo.png" alt="google-logo"/> Or sign-in with google</button>
                 </div>
             </div>
 
-            <p class="grey-text login-bottom-div"> Dont have a account? <span style="margin-left:0px;" class="link-class"> Join free today</span></p>
+            <p  class="grey-text login-bottom-div"> Dont have a account? <span style="margin-left:0px;" class="link-class"> Join free today</span></p>
 
         </div>
 
     </div>
 
+    <script src="index.js"></script>
 </body>
 
 </html>
