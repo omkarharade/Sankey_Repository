@@ -1,0 +1,96 @@
+:root {
+    --blue-dark: #164B60;
+    --blue-light: #3AA6B9;
+    --blue: #1B6B93;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #efefef;
+}
+
+label{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    margin: 2rem 0.5rem 2rem 0.5rem;
+}
+
+
+.emp-portal{
+
+    display: flex;
+    flex-direction: column;
+}
+
+.add-employee-div{
+    border: 2px solid #1B6B93;
+    background-color: white;
+    padding: 4rem 2rem 1rem 2rem;
+    margin: 2rem 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.input-area{
+
+}
+
+.emp-table{
+    margin: 0px auto;
+}
+
+.emp-table-div{
+    margin: 4rem auto;
+}
+
+
+.btn-add {
+    transition-duration: 0.4s;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+    border-radius: 10px;
+    margin: 2rem 1rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .btn-add:hover {
+    background-color: #008CBA; /* Green */
+    color: white;
+  }
+
+.input-field{
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin: 2rem 5rem 2rem 0.5rem;
+}
+
+.dropdown-field{
+    padding: 0.5rem 1rem;
+    margin: 2rem 5rem 2rem 0.5rem;
+}
+
+tr{
+    padding: 0.25rem 5rem;
+}
+td{
+    padding: 1rem 5rem;
+}
+
+.table-button{
+    margin: 0.5rem 0.25rem;
+    padding: 0.5rem 1rem;
+}

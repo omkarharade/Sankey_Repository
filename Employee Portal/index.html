@@ -1,0 +1,119 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    </style>
+</head>
+
+<body>
+
+    <div class="emp-portal">
+
+        <div class="add-employee-div">
+
+
+            <div class="input-area">
+                <label for="">ID</label>
+                <input id = "empId" class="input-field" type="text">
+            </div>
+
+            <div class="input-area">
+                <label for="">Name</label>
+                <input id = "empName" class="input-field" type="text">
+            </div>
+
+            <div class="input-area">
+                <label for="">Age</label>
+                <input id = "empAge" class="input-field" type="text" maxlength="2" minlength="2" size="2">           
+            </div>
+
+            
+            <div class="input-area">
+                <label for="">Gender</label>
+                <select id = empGender class="dropdown-field">
+                    <option value="Select">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <div class="input-area">
+                <label for="">Designation</label>
+                <select id = empDesignation class="dropdown-field">
+                    <option value="Select">Select</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Team Leader">Team Leader</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Non-Technical">Non Technical</option>
+                </select>
+            </div>
+
+            <div class="input-area">
+                <label for="">Self Photo</label>
+            <input id = empPhotoURL class="input-field" type= "url">
+            </div>
+
+            <div class="input-area">
+                <p onclick="addEmployee()" class="btn-add">Add Employee</p>
+            </div>
+
+        </div>
+
+        
+
+        <div class="emp-table-div">
+
+            <table class="emp-table" border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Designation</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id = "table">
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>30</td>
+                        <td>Male</td>
+                        <td>Software Engineer</td>
+                        <td>
+                            <button class="table-button">Edit</button> 
+                            <button class="table-button">Delete</button>
+                            <button class="table-button">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>28</td>
+                        <td>Female</td>
+                        <td>HR Manager</td>
+                        <td>
+                            <button class="table-button">Edit</button> 
+                            <button class="table-button">Delete</button>
+                            <button class="table-button">View</button> 
+                        </td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
