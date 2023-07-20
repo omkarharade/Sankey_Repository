@@ -6,7 +6,7 @@ const user1 = {
 	name: "John Doe",
 	age: 30,
 	gender: "Male",
-	designation: "Software Engineer",
+	designation: "Developer",
 	photoURL:
 		"https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg",
 };
@@ -34,9 +34,9 @@ function addToTable(empData) {
                         <td>${empData.gender}</td>
                         <td>${empData.designation}</td>
                         <td>
-                            <i class="fa-solid fa-pen-to-square fa-lg table-button edit-button" value = "${empData.id}"></i>
-                            <i class="fa-solid fa-trash fa-lg table-button delete-button" value = "${empData.id}" onclick = "deleteData(this)"></i>
-                            <i class="fa-solid fa-eye fa-lg table-button view-button" value = "${empData.id}"></i>
+                            <i class="fa-solid fa-pen-to-square fa-lg table-button edit-button"  onclick = 'editData(${empData.id}, "edit")'></i>
+                            <i class="fa-solid fa-trash fa-lg table-button delete-button delete-icon"  onclick = 'deleteData(${empData.id})'></i>
+                            <i class="fa-solid fa-eye fa-lg table-button view-button" value = "${empData.id}" onclick = 'editData(${empData.id},"view")'></i>
                     </tr>`;
 	return addRow;
 }
@@ -56,80 +56,141 @@ function reloadTable(users) {
 	let tableData = "";
 	users.forEach((employee) => {
 		let addRow = addToTable(employee);
-		tableData += addRow;
 
-		let table = document.getElementById("table");
-		table.innerHTML = tableData;
+		tableData += addRow;
 	});
+
+	console.log(tableData);
+
+	let table = document.getElementById("table");
+	table.innerHTML = tableData;
 }
 
 // ----------------validation functions----------------------------------
 
-function idValidation() {
-	document.getElementById("id-validation").innerText = "";
-	const idInput = document.getElementById("empId").value;
+function idValidation(action) {
+	let target, source;
+	console.log(action);
+
+	if (action == "insert") {
+		source = document.getElementById("empId");
+		target = document.getElementById("id-validation");
+	} else {
+		source.value = document.getElementById("empIdPopup").value;
+		target.innerText = document.getElementById("id-valid-popup").innerText;
+	}
+
 	const idPattern = /^\d+$/; // Regular expression for numbers only
 
-	if (idPattern.test(idInput)) {
-		document.getElementById("id-validation").innerText = "";
-		return true; // The input is valid
+	if (idPattern.test(source.value)) {
+		target.innerText = "";
+		return true;
 	} else {
-		document.getElementById("id-validation").innerText = "invalid ID";
-		return false; // The input is not valid
+		target.innerText = "invalid ID";
+		return false;
 	}
 }
 
-function nameValidation() {
-	document.getElementById("name-validation").innerText = "";
-	let nameInput = document.getElementById("empName").value;
+function nameValidation(action) {
+	let source, target;
+
+	if (action == "insert") {
+		source = document.getElementById("empName");
+		target = document.getElementById("name-validation");
+	} else {
+		source = document.getElementById("empNamePopup");
+		target = document.getElementById("name-valid-popup");
+	}
+	target.innerText = "";
 	const namePattern = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
 
-	if (namePattern.test(nameInput)) {
-		document.getElementById("name-validation").innerText = "";
-		return true; // The input is valid
+	if (namePattern.test(source.value)) {
+		target.innerText = "";
+		return true;
 	} else {
-		document.getElementById("name-validation").innerText = "Invalid Name";
-		return false; // The input is not valid
+		target.innerText = "Invalid Name";
+		return false;
 	}
 }
 
-function ageValidation() {
+function ageValidation(action) {
+	let source, target;
+	console.log(action);
+	if (action == "insert") {
+		target = document.getElementById("age-validation");
+		source = document.getElementById("empAge");
+	} else {
+		target = document.getElementById("age-valid-popup");
+		source = document.getElementById("empAgePopup");
+	}
 	console.log("here");
-	document.getElementById("age-validation").innerText = "";
-	const ageDOM = document.getElementById("empAge");
-	const ageValue = parseInt(ageDOM.value);
+	target.innerText = "";
+
+	const ageValue = parseInt(source.value);
 	console.log(ageValue);
 
 	if (ageValue >= 18 && ageValue <= 60) {
-		document.getElementById("age-validation").innerText = "";
+		target.innerText = "";
+		return true;
 	} else {
-		document.getElementById("age-validation").innerText = "invalid age";
+		target.innerText = "invalid age";
+		return false;
 	}
 }
 
-function genderValidation() {
-	document.getElementById("gender-validation").innerText = "";
-	const genderDOM = document.getElementById("empGender");
-	const genderValue = genderDOM.value;
+function genderValidation(action) {
+	let source, target;
+
+	if (action == "insert") {
+		source = document.getElementById("empGender");
+		target = document.getElementById("gender-validation");
+	} else {
+		source = document.getElementById("empGenderPopup");
+		target = document.getElementById("gender-valid-popup");
+	}
+	target.innerText = "";
+	const genderValue = source.value;
 
 	if (genderValue == "Select") {
-		document.getElementById("gender-validation").innerText = "Select Gender";
-	} else document.getElementById("gender-validation").innerText = "";
+		target.innerText = "Select Gender";
+		return false;
+	} else {
+		target.innerText = "";
+		return true;
+	}
 }
 
-function designationValidation() {
-	document.getElementById("designation-validation").innerText = "";
-	const designationDOM = document.getElementById("empDesignation");
-	const designationValue = designationDOM.value;
+function designationValidation(action) {
+	let source, target;
+
+	if (action == "insert") {
+		source = document.getElementById("empDesignation");
+		target = document.getElementById("designation-validation");
+	} else {
+		source = document.getElementById("empDesignationPopup");
+		target = document.getElementById("designation-valid-popup");
+	}
+
+	target.innerText = "";
+	const designationValue = source.value;
 
 	if (designationValue == "Select") {
-		document.getElementById("designation-validation").innerText =
-			"Select Designation";
-	} else document.getElementById("designation-validation").innerText = "";
+		target.innerText = "Select Designation";
+		return false;
+	} else {
+		target.innerText = "";
+		return true;
+	}
 }
 
-function urlValidation() {
-	const imageUrl = document.getElementById("empPhotoURL").value;
+function urlValidation(action) {
+	let source, target;
+
+	if (action == "insert") {
+		source = document.getElementById("empPhotoURL");
+		target = document.getElementById("url-validation");
+	}
+	const imageUrl = source.value;
 	const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"]; // Supported image extensions
 
 	// Check if the URL ends with a valid image extension
@@ -138,40 +199,95 @@ function urlValidation() {
 	);
 
 	if (isValidImage) {
-		document.getElementById("url-validation").innerText = "";
+		target.innerText = "";
+		return true;
 	} else {
-		document.getElementById("url-validation").innerText = "invalid url";
+		target.innerText = "invalid url";
+		return false;
 	}
 }
 
-// calling the updateTable function to load existing users
-reloadTable(users);
-
 //  ---------CRUD Operatins -----------------
 
-function deleteData(obj) {
-	console.log(e);
-	alert("hii");
-	let tableData = "";
-	const id = obj.value;
-	console.log(id);
+function deleteData(id) {
+	console.log("omkar", id);
 
-	// let updatedUsers = users.filter((employee) => {
-	// 	employee.id == id;
-	// });
-
-	// updatedUsers.forEach((employee) => {
-	// 	let addRow = addToTable(employee);
-	// 	tableData += addRow;
-	// });
-
-	// document.getElementById("table").innerHTML = tableData;
-	// users = updatedUsers;
-	// reloadTable(users);
+	users = users.filter((user) => {
+		return user.id != id;
+	});
+	reloadTable(users);
 }
 
-function editData() {
-	console.log("hello");
+function toggleInit() {
+	document.getElementById("empIdPopup").readOnly = false;
+	document.getElementById("empNamePopup").readOnly = false;
+	document.getElementById("empAgePopup").readOnly = false;
+	document.getElementById("empGenderPopup").disabled = false;
+	document.getElementById("empDesignationPopup").disabled = false;
+	document.getElementById("empPhotoURLPopup").readOnly = false;
+	document.getElementById("popup-submit-btn").disabled = false;
+}
+
+function togglePopup() {
+	const popup = document.getElementById("popupContainer");
+	popup.style.display = popup.style.display === "none" ? "block" : "none";
+	document.getElementById("popup-close-btn").disabled = false;
+}
+
+function editData(id, editType) {
+	toggleInit();
+	const index = users.findIndex((user) => {
+		return user.id == id;
+	});
+
+	document.getElementById("empIdPopup").value = users[index].id;
+	document.getElementById("empNamePopup").value = users[index].name;
+	document.getElementById("empAgePopup").value = users[index].age;
+	document.getElementById("empGenderPopup").value = users[index].gender;
+	document.getElementById("empDesignationPopup").value =
+		users[index].designation;
+	document.getElementById("empPhotoURLPopup").value = users[index].photoURL;
+	document.getElementById(
+		"emp-img"
+	).innerHTML = `<img class="emp-img" alt="Users Image" src = "${users[index].photoURL}">`;
+
+	console.log("editType", editType);
+
+	if (editType == "view") {
+		console.log("view-hew");
+		document.getElementById("empIdPopup").readOnly = true;
+		document.getElementById("empNamePopup").readOnly = true;
+		document.getElementById("empAgePopup").readOnly = true;
+		document.getElementById("empGenderPopup").disabled = true;
+		document.getElementById("empDesignationPopup").disabled = true;
+		users[index].designation;
+		document.getElementById("empPhotoURLPopup").readOnly = true;
+		document.getElementById("popup-submit-btn").disabled = true;
+	}
+
+	togglePopup();
+}
+
+function editSubmit() {
+	const id = document.getElementById("empIdPopup").value;
+	const index = users.findIndex((user) => {
+		return user.id == id;
+	});
+
+	let user = users[index];
+	console.log(user);
+
+	users[index].name = document.getElementById("empNamePopup").value;
+	users[index].age = document.getElementById("empAgePopup").value;
+	users[index].gender = document.getElementById("empGenderPopup").value;
+	users[index].designation = document.getElementById(
+		"empDesignationPopup"
+	).value;
+	users[index].photoURL = document.getElementById("empPhotoURLPopup").value;
+
+	console.log(users[index]);
+	reloadTable(users);
+	togglePopup();
 }
 
 // add employee on successfull entry of new data
@@ -199,12 +315,25 @@ function addEmployee() {
 	console.log("gender", employee.gender);
 	console.log("designation", employee.designation);
 
+	// check through all validations
+
+	if (
+		!idValidation("insert") ||
+		!nameValidation("insert") ||
+		!ageValidation("insert") ||
+		!genderValidation("insert") ||
+		!designationValidation("insert") ||
+		!urlValidation("insert")
+	) {
+		alert("Invalid Input Alert");
+		return;
+	}
+
 	// note : keep a note to update the updateString addRow if anything changes
 
 	let addRow = addToTable(employee);
 	let table = document.getElementById("table");
 	table.insertAdjacentHTML("beforeend", addRow);
 	clearInputFields();
-
 	console.log(users);
 }
