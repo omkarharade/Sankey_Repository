@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/badae8be5c.js" crossorigin="anonymous"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
     </style>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    </style> 
 </head>
 
 <body>
@@ -19,33 +24,39 @@
 
             <div class="input-area">
                 <label for="">ID</label>
-                <input id = "empId" class="input-field" type="text">
+                <input id = "empId" class="input-field" type="text" size="8" onkeyup="idValidation()">
+                <p id="id-validation"></p>
             </div>
 
             <div class="input-area">
                 <label for="">Name</label>
-                <input id = "empName" class="input-field" type="text">
+                <input id = "empName" class="input-field" type="text" onkeyup="nameValidation()">
+                <p id="name-validation"></p>
+
             </div>
 
             <div class="input-area">
                 <label for="">Age</label>
-                <input id = "empAge" class="input-field" type="text" maxlength="2" minlength="2" size="2">           
+                <input id = "empAge" class="input-field" type="text" maxlength="2" minlength="2" size="2" onkeyup="ageValidation()">  
+                <p id="age-validation"></p>
             </div>
 
             
             <div class="input-area">
                 <label for="">Gender</label>
-                <select id = empGender class="dropdown-field">
+                <select id = empGender class="dropdown-field" onchange="genderValidation()">
                     <option value="Select">Select</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Others">Others</option>
                 </select>
+                <p id="gender-validation"></p>
+                
             </div>
 
             <div class="input-area">
                 <label for="">Designation</label>
-                <select id = empDesignation class="dropdown-field">
+                <select id = empDesignation class="dropdown-field" >
                     <option value="Select">Select</option>
                     <option value="Developer">Developer</option>
                     <option value="Intern">Intern</option>
@@ -53,15 +64,17 @@
                     <option value="Manager">Manager</option>
                     <option value="Non-Technical">Non Technical</option>
                 </select>
+                <p id="designation-validation"></p>
+
             </div>
 
             <div class="input-area">
-                <label for="">Self Photo</label>
-            <input id = empPhotoURL class="input-field" type= "url">
+                <label for="">Image Link</label>
+            <input id = empPhotoURL class="input-field" type= "url" size="10">
             </div>
 
             <div class="input-area">
-                <p onclick="addEmployee()" class="btn-add">Add Employee</p>
+                <a onclick="addEmployee()" class="btn-add">Add Employee</a>
             </div>
 
         </div>
@@ -89,9 +102,9 @@
                         <td>Male</td>
                         <td>Software Engineer</td>
                         <td>
-                            <button class="table-button">Edit</button> 
-                            <button class="table-button">Delete</button>
-                            <button class="table-button">View</button></td>
+                            <i class="fa-solid fa-pen-to-square fa-lg table-button edit-button" ></i>
+                            <i class="fa-solid fa-trash fa-lg table-button delete-button"></i>
+                            <i class="fa-solid fa-eye fa-lg table-button view-button"></i>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -100,9 +113,9 @@
                         <td>Female</td>
                         <td>HR Manager</td>
                         <td>
-                            <button class="table-button">Edit</button> 
-                            <button class="table-button">Delete</button>
-                            <button class="table-button">View</button> 
+                            <i class="fa-solid fa-pen-to-square fa-lg table-button edit-button" ></i>
+                            <i class="fa-solid fa-trash fa-lg table-button delete-button"></i>
+                            <i class="fa-solid fa-eye fa-lg table-button view-button"></i>
                         </td>
                     </tr>
                     <!-- Add more rows as needed -->
@@ -111,7 +124,7 @@
         </div>
 
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="index.js"></script>
 
 </body>
