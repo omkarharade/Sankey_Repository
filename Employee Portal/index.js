@@ -1,6 +1,30 @@
 const idList = [];
 let users = [];
 
+const user1 = {
+	id: 1,
+	name: "John Doe",
+	age: 30,
+	gender: "Male",
+	designation: "Software Engineer",
+	photoURL:
+		"https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg",
+};
+
+const user2 = {
+	id: 2,
+	name: "Jane Smith",
+	age: 28,
+	gender: "Female",
+	designation: "Manager",
+	photoURL:
+		"https://www.losingcontrol.org/wp-content/uploads/2017/05/speaker-1.jpg",
+};
+
+users.push(user1);
+users.push(user2);
+reloadTable(users);
+
 function addToTable(empData) {
 	let addRow = `
                     <tr>
@@ -93,7 +117,32 @@ function genderValidation() {
 	} else document.getElementById("gender-validation").innerText = "";
 }
 
-function designationValidation() {}
+function designationValidation() {
+	document.getElementById("designation-validation").innerText = "";
+	const designationDOM = document.getElementById("empDesignation");
+	const designationValue = designationDOM.value;
+
+	if (designationValue == "Select") {
+		document.getElementById("designation-validation").innerText =
+			"Select Designation";
+	} else document.getElementById("designation-validation").innerText = "";
+}
+
+function urlValidation() {
+	const imageUrl = document.getElementById("empPhotoURL").value;
+	const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"]; // Supported image extensions
+
+	// Check if the URL ends with a valid image extension
+	const isValidImage = imageExtensions.some((extension) =>
+		imageUrl.toLowerCase().endsWith(extension)
+	);
+
+	if (isValidImage) {
+		document.getElementById("url-validation").innerText = "";
+	} else {
+		document.getElementById("url-validation").innerText = "invalid url";
+	}
+}
 
 // calling the updateTable function to load existing users
 reloadTable(users);
@@ -155,6 +204,7 @@ function addEmployee() {
 	let addRow = addToTable(employee);
 	let table = document.getElementById("table");
 	table.insertAdjacentHTML("beforeend", addRow);
-
 	clearInputFields();
+
+	console.log(users);
 }
