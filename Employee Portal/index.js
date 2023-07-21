@@ -327,13 +327,13 @@ function addEmployee() {
 	) {
 		alert("Invalid Input Alert");
 		return;
+	} else {
+		let addRow = addToTable(employee);
+		let table = document.getElementById("table");
+		table.insertAdjacentHTML("beforeend", addRow);
+		clearInputFields();
+		console.log(users);
 	}
 
 	// note : keep a note to update the updateString addRow if anything changes
-
-	let addRow = addToTable(employee);
-	let table = document.getElementById("table");
-	table.insertAdjacentHTML("beforeend", addRow);
-	clearInputFields();
-	console.log(users);
 }
