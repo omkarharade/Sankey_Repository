@@ -36,7 +36,7 @@ function addToTable(empData) {
                         <td>
                             <i class="fa-solid fa-pen-to-square fa-lg table-button edit-button"  onclick = 'editData(${empData.id}, "edit")'></i>
                             <i class="fa-solid fa-trash fa-lg table-button delete-button delete-icon"  onclick = 'deleteData(${empData.id})'></i>
-                            <i class="fa-solid fa-eye fa-lg table-button view-button" value = "${empData.id}" onclick = 'editData(${empData.id},"view")'></i>
+                            <i class="fa-solid fa-eye fa-lg table-button view-button" value = "${empData.id}" onclick = 'viewData(${empData.id},"view")'></i>
                     </tr>`;
 	return addRow;
 }
@@ -47,8 +47,8 @@ function clearInputFields() {
 	document.getElementById("empId").value = "";
 	document.getElementById("empName").value = "";
 	document.getElementById("empAge").value = "";
-	document.getElementById("empGender").value = "";
-	document.getElementById("empDesignation").value = "";
+	document.getElementById("empGender").value = "Select";
+	document.getElementById("empDesignation").value = "Select";
 	document.getElementById("empPhotoURL").value = "";
 }
 
@@ -60,8 +60,6 @@ function reloadTable(users) {
 		tableData += addRow;
 	});
 
-	console.log(tableData);
-
 	let table = document.getElementById("table");
 	table.innerHTML = tableData;
 }
@@ -70,7 +68,6 @@ function reloadTable(users) {
 
 function idValidation(action) {
 	let target, source;
-	console.log(action);
 
 	if (action == "insert") {
 		source = document.getElementById("empId");
@@ -83,8 +80,22 @@ function idValidation(action) {
 	const idPattern = /^\d+$/; // Regular expression for numbers only
 
 	if (idPattern.test(source.value)) {
-		target.innerText = "";
-		return true;
+		let idExists = false;
+
+		users.forEach(user => {
+			if (user.id == source.value) {
+				idExists = true;
+			}
+		});
+
+		if (idExists) {
+			target.innerText = "ID already exists";
+			return false;
+		}
+		else {
+			target.innerText = "";
+			return true;
+		}
 	} else {
 		target.innerText = "invalid ID";
 		return false;
@@ -115,7 +126,6 @@ function nameValidation(action) {
 
 function ageValidation(action) {
 	let source, target;
-	console.log(action);
 	if (action == "insert") {
 		target = document.getElementById("age-validation");
 		source = document.getElementById("empAge");
@@ -123,11 +133,9 @@ function ageValidation(action) {
 		target = document.getElementById("age-valid-popup");
 		source = document.getElementById("empAgePopup");
 	}
-	console.log("here");
 	target.innerText = "";
 
 	const ageValue = parseInt(source.value);
-	console.log(ageValue);
 
 	if (ageValue >= 18 && ageValue <= 60) {
 		target.innerText = "";
@@ -151,7 +159,7 @@ function genderValidation(action) {
 	target.innerText = "";
 	const genderValue = source.value;
 
-	if (genderValue == "Select") {
+	if (genderValue == "Select" || genderValue == "") {
 		target.innerText = "Select Gender";
 		return false;
 	} else {
@@ -174,7 +182,7 @@ function designationValidation(action) {
 	target.innerText = "";
 	const designationValue = source.value;
 
-	if (designationValue == "Select") {
+	if (designationValue == "Select" || designationValue == "") {
 		target.innerText = "Select Designation";
 		return false;
 	} else {
@@ -183,25 +191,78 @@ function designationValidation(action) {
 	}
 }
 
-function urlValidation(action) {
+function processImg(src) {
+
+	const img = new Image();
+	img.src = src;
+
+	return new Promise((resolve) => {
+		img.onerror = () => {
+			return resolve(false);
+		}
+		img.onload = () => {
+			return resolve(true);
+		}
+	});
+
+}
+
+async function urlValidation(action) {
 	let source, target;
 
+	console.log(1)
 	if (action == "insert") {
 		source = document.getElementById("empPhotoURL");
 		target = document.getElementById("url-validation");
 	}
+	else {
+		source = document.getElementById("empPhotoURLPopup");
+		target = document.getElementById("url-valid-popup");
+	}
+
+	console.log(2)
+
+
+	if (source.value == "") return false;
+
+	console.log(3)
+
+
 	const imageUrl = source.value;
-	const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"]; // Supported image extensions
 
-	// Check if the URL ends with a valid image extension
-	const isValidImage = imageExtensions.some((extension) =>
-		imageUrl.toLowerCase().endsWith(extension)
-	);
+	console.log(4)
 
-	if (isValidImage) {
+
+	// const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"]; // Supported image extensions
+
+	// // Check if the URL ends with a valid image extension
+	// const isValidImage = imageExtensions.some((extension) =>
+	// 	imageUrl.toLowerCase().endsWith(extension)
+	// );
+
+	const img = new Image();
+	img.src = imageUrl;
+
+	console.log(5)
+
+
+	let isValid = await processImg(imageUrl);
+	console.log(isValid)
+
+	console.log(6)
+
+
+	console.log("this is isValid", isValid)
+
+	if (isValid) {
+		console.log(7)
+
 		target.innerText = "";
 		return true;
+
 	} else {
+		console.log(8)
+
 		target.innerText = "invalid url";
 		return false;
 	}
@@ -210,7 +271,6 @@ function urlValidation(action) {
 //  ---------CRUD Operatins -----------------
 
 function deleteData(id) {
-	console.log("omkar", id);
 
 	users = users.filter((user) => {
 		return user.id != id;
@@ -251,10 +311,7 @@ function editData(id, editType) {
 		"emp-img"
 	).innerHTML = `<img class="emp-img" alt="Users Image" src = "${users[index].photoURL}">`;
 
-	console.log("editType", editType);
-
 	if (editType == "view") {
-		console.log("view-hew");
 		document.getElementById("empIdPopup").readOnly = true;
 		document.getElementById("empNamePopup").readOnly = true;
 		document.getElementById("empAgePopup").readOnly = true;
@@ -262,10 +319,42 @@ function editData(id, editType) {
 		document.getElementById("empDesignationPopup").disabled = true;
 		users[index].designation;
 		document.getElementById("empPhotoURLPopup").readOnly = true;
-		document.getElementById("popup-submit-btn").disabled = true;
+		$("#popup-submit-btn").prop("disabled", true)
 	}
 
 	togglePopup();
+}
+
+function viewData(id) {
+	toggleInit();
+	const index = users.findIndex((user) => {
+		return user.id == id;
+	});
+
+	document.getElementById("empIdPopup").value = users[index].id;
+	document.getElementById("empNamePopup").value = users[index].name;
+	document.getElementById("empAgePopup").value = users[index].age;
+	document.getElementById("empGenderPopup").value = users[index].gender;
+	document.getElementById("empDesignationPopup").value =
+		users[index].designation;
+	document.getElementById("empPhotoURLPopup").value = users[index].photoURL;
+	document.getElementById(
+		"emp-img"
+	).innerHTML = `<img class="emp-img" alt="Users Image" src = "${users[index].photoURL}">`;
+
+
+	document.getElementById("empIdPopup").readOnly = true;
+	document.getElementById("empNamePopup").readOnly = true;
+	document.getElementById("empAgePopup").readOnly = true;
+	document.getElementById("empGenderPopup").disabled = true;
+	document.getElementById("empDesignationPopup").disabled = true;
+	users[index].designation;
+	document.getElementById("empPhotoURLPopup").readOnly = true;
+	$( "#popup-submit-btn" ).css('background-color', 'grey')
+	$( "#popup-submit-btn" ).disabled = true;
+
+	togglePopup()
+
 }
 
 function editSubmit() {
@@ -275,7 +364,6 @@ function editSubmit() {
 	});
 
 	let user = users[index];
-	console.log(user);
 
 	users[index].name = document.getElementById("empNamePopup").value;
 	users[index].age = document.getElementById("empAgePopup").value;
@@ -285,13 +373,12 @@ function editSubmit() {
 	).value;
 	users[index].photoURL = document.getElementById("empPhotoURLPopup").value;
 
-	console.log(users[index]);
 	reloadTable(users);
 	togglePopup();
 }
 
 // add employee on successfull entry of new data
-function addEmployee() {
+async function addEmployee() {
 	let inputId = document.getElementById("empId").value;
 	let inputName = document.getElementById("empName").value;
 	let inputAge = document.getElementById("empAge").value;
@@ -306,16 +393,7 @@ function addEmployee() {
 	employee.gender = inputGender;
 	employee.designation = inputDesignation;
 	employee.photoURL = inputPhotoURL;
-
-	users.push(employee); // pushed the input employee details into the array;
-
-	console.log("id", employee.id);
-	console.log("name", employee.name);
-	console.log("age", employee.age);
-	console.log("gender", employee.gender);
-	console.log("designation", employee.designation);
-
-	// check through all validations
+	const urlValid = await urlValidation("insert");
 
 	if (
 		!idValidation("insert") ||
@@ -323,17 +401,43 @@ function addEmployee() {
 		!ageValidation("insert") ||
 		!genderValidation("insert") ||
 		!designationValidation("insert") ||
-		!urlValidation("insert")
+		!urlValid
 	) {
 		alert("Invalid Input Alert");
-		return;
+		console.log("here-2")
+
 	} else {
+		console.log("huihui")
+		users.push(employee);
 		let addRow = addToTable(employee);
 		let table = document.getElementById("table");
 		table.insertAdjacentHTML("beforeend", addRow);
 		clearInputFields();
 		console.log(users);
+		console.log("here-2")
+
 	}
 
 	// note : keep a note to update the updateString addRow if anything changes
+}
+
+function searchQuery() {
+	const query = document.getElementById("search-query").value;
+	console.log(query);
+
+	let searchResults = users.filter((user) => {
+		if (
+			user.name.startsWith(query) ||
+			user.gender.startsWith(query) ||
+			user.designation.startsWith(query) ||
+			(user.id == query) ||
+			(user.age == query)
+		) {
+			return true;
+		}
+		else return false;
+	});
+
+	console.log(searchResults);
+	reloadTable(searchResults)
 }
