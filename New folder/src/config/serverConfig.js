@@ -8,5 +8,6 @@ module.exports = {
     DATABASE : process.env.DATABASE,
     PASSWORD : process.env.PASSWORD,
     DIALECT : process.env.DIALECT,
-    PORT : process.env.PORT,
+    DB_PORT : process.env.DB_PORT,
+    SERVER_PORT : process.env.SERVER_PORT,
 };
