@@ -1,0 +1,137 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+html{
+    box-sizing: border-box;
+}
+
+.grey-text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    size: 12px;
+    line-height: 18.75px;   
+    color: #2D3748;
+    margin: 10px 0px;
+
+}
+
+.bold-text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    size: 30px;
+    line-height: 35.16px;
+    color: #1A202C;
+    margin-bottom: 20px;
+}
+
+.white-text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    size: 16px;
+    line-height: 18.75px;
+    color: white;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100%;
+}
+
+.login-image-div{
+    width: 50%;
+}
+
+.login-btn{
+    width: 20rem;
+    height:3rem;
+    border-radius: 5px;
+    background: #04C35C;
+    border: none;
+    margin: 11px 10px;
+
+}
+
+.signin-btn{
+    width: 20rem;
+    height:3rem;
+    border-radius: 5px;
+    background: #2D3748;
+    border: none;
+    margin: 11px 10px;
+}
+
+.link-class{
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: #41699b;
+    size: 14px;
+    line-height: 16.41px;
+    margin-left: 80px;
+}
+
+.mountain-image{
+    width:100%;
+    max-height: 100vh;
+}
+
+.login-content-wrapper{
+    /* background-color: #04C35C; */
+    display: flex;
+    height: 100vh;
+    width: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-bottom-div{
+    position: absolute;
+    bottom: 3rem;
+
+}
+
+.login-content{
+    
+    width: 21.5rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    position: relative;
+}
+
+.login-content > input {
+    height:45px;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #E8E8E8;
+}
+
+.login-content > input:focus {
+    border-color: black;
+    outline: 1px
+}
+
+
+.password-recover-wrapper{
+    margin: 30px 0px  20px 0px;
+    width: 347px;
+}
+
+@media screen and (max-width: 1000px) {
+    .login-container {
+      flex-direction: column;
+    }
+    .login-image-div {
+        width: 100%;
+    }
+    .login-content-wrapper{
+        margin-top: 5rem;
+        width: 100%;
+    }
+  }
