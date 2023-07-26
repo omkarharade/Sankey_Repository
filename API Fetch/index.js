@@ -10,7 +10,7 @@ async function getUsers() {
         const resData = resJSON.data;
         console.log("resData", resData)
         resData.forEach((data) => {
-            htmlTable = htmlTable + `<tr> <th> ${data.name} </th>  <th> ${data.office} </th>  <th> ${data.position} </th> <th> ${data.salary} </th></tr>`
+            htmlTable = htmlTable + `<tr> <td> ${data.name} </td>  <td> ${data.office} </td>  <td> ${data.position} </td> <td> ${data.salary} </td></tr>`
         })
 
         console.log(htmlTable)

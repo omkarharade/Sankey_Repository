@@ -1,28 +1,20 @@
 const express = require('express')
 const {USER, PASSWORD, HOST, DATABASE, DIALECT, DB_PORT, SERVER_PORT} = require('./config/serverConfig')
-const Pool = require('pg').Pool;
 const bodyParser = require('body-parser');  
 const {HeroRoutes} = require('./routes/index');
+const db = require("./models/index");
+const cors = require('cors');
+const { sequelize } = require('./models');
 
 
 const setupAndStartServer = () => {
   const app = express()
   const port = 3000;
 
-  console.log('password', PASSWORD)
-
-  const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: '13102001',
-    dialect: 'postgres',
-    port: 5432
-  })
-
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }));
-
+  app.use(cors());
+  
   app.use('/api', HeroRoutes);
 
   app.get('/', (req, res) => {
@@ -30,7 +22,21 @@ const setupAndStartServer = () => {
   })
 
   app.listen(port, () => {
+
     console.log(`server running on port : ${port}`);
+
+    console.log(`Server is running on http://localhost:${port}`);
+    sequelize.authenticate()
+    .then(() => {
+      console.log('Database connection has been established successfully.');
+    })
+    .catch((err) => {
+      console.error('Unable to connect to the database:', err);
+    });
+
+    if (process.env.SYNC_DB) {
+			db.sequelize.sync({ alter: true});
+		}
   })
 }
 

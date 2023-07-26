@@ -5,7 +5,7 @@ const samplePassword = "Omkar@1234pom"
 function emailValidator(email){
 
     
-    var regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    let regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
 }
 
@@ -27,10 +27,10 @@ function loginBtnClick(){
     const isValidEmail = emailValidator(emailData);
     console.log(isValidEmail)
 
-    var passwordData = document.getElementById("password").value;
-    var emailAlert = document.getElementById("email-alert");
+    let passwordData = document.getElementById("password").value;
+    let emailAlert = document.getElementById("email-alert");
     emailAlert.innerText = "";
-    var passwordAlert = document.getElementById("password-alert");
+    let passwordAlert = document.getElementById("password-alert");
     passwordAlert.innerText = "";
 
     if(isValidEmail){

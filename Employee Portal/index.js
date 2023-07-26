@@ -21,8 +21,8 @@ const user2 = {
 		"https://www.losingcontrol.org/wp-content/uploads/2017/05/speaker-1.jpg",
 };
 
-users.push(user1);
-users.push(user2);
+// users.push(user1);
+// users.push(user2);
 reloadTable(users);
 
 function addToTable(empData) {
@@ -137,7 +137,7 @@ function ageValidation(action) {
 
 	const ageValue = parseInt(source.value);
 
-	if (ageValue >= 18 && ageValue <= 60) {
+	if ((ageValue >= 15 && ageValue <= 35) || (ageValue >= 45 && ageValue <= 65)) {
 		target.innerText = "";
 		return true;
 	} else {
@@ -208,9 +208,8 @@ function processImg(src) {
 }
 
 async function urlValidation(action) {
+	
 	let source, target;
-
-	console.log(1)
 	if (action == "insert") {
 		source = document.getElementById("empPhotoURL");
 		target = document.getElementById("url-validation");
@@ -220,39 +219,13 @@ async function urlValidation(action) {
 		target = document.getElementById("url-valid-popup");
 	}
 
-	console.log(2)
-
-
 	if (source.value == "") return false;
 
-	console.log(3)
-
-
 	const imageUrl = source.value;
-
-	console.log(4)
-
-
-	// const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"]; // Supported image extensions
-
-	// // Check if the URL ends with a valid image extension
-	// const isValidImage = imageExtensions.some((extension) =>
-	// 	imageUrl.toLowerCase().endsWith(extension)
-	// );
-
 	const img = new Image();
 	img.src = imageUrl;
 
-	console.log(5)
-
-
 	let isValid = await processImg(imageUrl);
-	console.log(isValid)
-
-	console.log(6)
-
-
-	console.log("this is isValid", isValid)
 
 	if (isValid) {
 		console.log(7)
@@ -350,7 +323,7 @@ function viewData(id) {
 	document.getElementById("empDesignationPopup").disabled = true;
 	users[index].designation;
 	document.getElementById("empPhotoURLPopup").readOnly = true;
-	$( "#popup-submit-btn" ).css('background-color', 'grey')
+	// $( "#popup-submit-btn" ).css('background-color', 'grey')
 	$( "#popup-submit-btn" ).disabled = true;
 
 	togglePopup()

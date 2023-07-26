@@ -10,7 +10,7 @@ const create = async (req, res) => {
         console.log(response)
 
         return res.status(201).json({
-            data: hero,
+            data: response,
             success: true,
             message: "successfully created a hero",
             err: {}

@@ -8,7 +8,7 @@ class HeroService{
 
     async createHero(data) {
         try {
-            const newHero = await this.heroRepository.createHeroData(data);
+            const newHero = await this.heroRepository.createHero(data);
             return newHero;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -20,6 +20,7 @@ class HeroService{
         
         try {
             const hero = await this.heroRepository.getHeroById(id);
+            console.log("hero", hero)
             return hero;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -30,7 +31,7 @@ class HeroService{
     async getAllHeroes(){
         
         try {
-            const heroes = await this.heroRepository.getAllHeroesData();
+            const heroes = await this.heroRepository.getAllHeroes();
             return heroes;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -41,7 +42,7 @@ class HeroService{
     async deleteHero(id){
 
         try {
-            const hero = await this.heroRepository.deleteHeroData(id);
+            const hero = await this.heroRepository.deleteHero(id);
             return hero;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -52,7 +53,7 @@ class HeroService{
     async updateHero(id, data){
 
         try {
-            const updatedHero = await this.heroRepository.updateHeroData(id, data);
+            const updatedHero = await this.heroRepository.updateHero(id, data);
             console.log("id", id, "data",  data);
             return updatedHero;
         } catch (error) {

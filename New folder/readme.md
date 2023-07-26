@@ -10,3 +10,4 @@
 - date_introduced, timestamp
 - is_certified_hero, not null, boolean
 - government_allowance, money
+
