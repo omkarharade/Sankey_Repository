@@ -19,6 +19,7 @@ class HeroRepository{
         
         try {
             const hero = await Guardian.findByPk(heroID);
+            if(hero == null) throw "NULL VALUE IN GIVEN ID";
             console.log(hero)
             return hero;
         } catch (error) {
@@ -30,6 +31,8 @@ class HeroRepository{
     async getAllHeroes(){
         try {
             const heroes = await Guardian.findAll();
+            if(heroes == null) throw "GET ALL FUNCTION RETURNED NULL";
+
             return heroes;
 
         } catch (error) {
@@ -41,11 +44,14 @@ class HeroRepository{
     async deleteHero(heroId){
         
         try {
-            await Guardian.destroy({
+            const deletedHero = await Guardian.destroy({
                 where:{
                     id: heroId
                 }
             });
+
+            if(deletedHero == 0) throw "HERO WITH THE INPUT ID DOES NOT EXIST";
+            return deletedHero;
 
         } catch (error) {
             console.log('something went wrong in repository layer');

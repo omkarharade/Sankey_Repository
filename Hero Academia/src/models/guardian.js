@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Guardian.init({
     name: {
       type: DataTypes.STRING(30),
-      allowNull: false
+      allowNull: false,
     },
     alias: {
       type:DataTypes.STRING(15)

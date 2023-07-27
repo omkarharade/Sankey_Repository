@@ -111,7 +111,7 @@ const destroy = async (req, res) => {
         const response = await heroService.deleteHero(req.params.id);
         console.log(response);
 
-        return res.status(202).json({
+        return res.status(200).json({
             data: response,
             success: true,
             message: "successfully deleted hero data",
