@@ -4,14 +4,6 @@ Basic RESTful api for Heroes where you can add/delete data of heroes.
 
 ## Guardian table Schema
 
-- hero_id (primary_key), unique, not null, integer
-- name, not null, varchar(30)
-- alias, varchar(15)
-- max_defence_power, double precision
-- max_attack_power, not null, double precision
-- date_introduced, timestamp
-- is_certified_hero, not null, boolean
-- government_allowance, money
 
 
 |Key| Field Name          | Data Type       | Allow Null | Description                     |
@@ -24,3 +16,26 @@ Basic RESTful api for Heroes where you can add/delete data of heroes.
 |   | is_certified        | TINYINT(1)      | No         | Status whether Hero is Certified by the Government         |
 |  | government_allowance| DECIMAL(10,2)   | Yes        | Government allowance provided to the Hero           |
 |  | date_introduced     | TIMESTAMP       | Yes        | Date when the hero was introduced |
+
+
+#### INSTALLATION INSTRUCTIONS
+-   Clone or download the repo. into your local system.
+-   Cd into that root folder you just cloned locally.
+-   install all dependencies which are written in the packet.json file, type
+    ```
+    npm install
+    ```
+-   Now typing
+    ```
+    npm start
+    ```
+    will start a server !
+    
+    App should now be running on **localhost:3000**
+         
+### Dependencies 
+ - For dependencies refer Package.json
+
+
+### For Testing (Postman)
+- Postman extension can be used for testing !
