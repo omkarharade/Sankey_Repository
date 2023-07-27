@@ -13,7 +13,7 @@ module.exports = {
      * }], {});
     */
 
-    await queryInterface.bulkInsert('Tests', [
+    await queryInterface.bulkInsert('Guardians', [
       {
       name: 'Ijuku Midoriya',
       alias: 'DEKU',
@@ -47,6 +47,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    await queryInterface.bulkDelete('Tests', null, {});
+    await queryInterface.bulkDelete('Guardians', null, {});
   }
 };

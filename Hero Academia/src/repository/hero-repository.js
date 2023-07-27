@@ -1,11 +1,11 @@
-const {Test} = require('../models/index')
+const {Guardian} = require('../models/index')
 
 class HeroRepository{
 
     async createHero(heroData){
 
         try {
-            const newHero = await Test.create(heroData);
+            const newHero = await Guardian.create(heroData);
             console.log(newHero)
             return newHero;
 
@@ -18,7 +18,7 @@ class HeroRepository{
     async getHeroById(heroID){
         
         try {
-            const hero = await Test.findByPk(heroID);
+            const hero = await Guardian.findByPk(heroID);
             console.log(hero)
             return hero;
         } catch (error) {
@@ -29,7 +29,7 @@ class HeroRepository{
 
     async getAllHeroes(){
         try {
-            const heroes = await Test.findAll();
+            const heroes = await Guardian.findAll();
             return heroes;
 
         } catch (error) {
@@ -41,7 +41,7 @@ class HeroRepository{
     async deleteHero(heroId){
         
         try {
-            await Test.destroy({
+            await Guardian.destroy({
                 where:{
                     id: heroId
                 }
@@ -56,7 +56,7 @@ class HeroRepository{
     async updateHero(heroId, data){
 
         try {
-            const hero = await Test.update(data, {
+            const hero = await Guardian.update(data, {
                 where: {
                     id : heroId
                 }
