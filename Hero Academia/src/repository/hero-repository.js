@@ -1,4 +1,5 @@
 const {Guardian} = require('../models/index')
+const { Op } = require("sequelize");
 
 class HeroRepository{
 
@@ -28,10 +29,58 @@ class HeroRepository{
         }
     }
 
-    async getAllHeroes(){
+    async getAllHeroes(query){
         try {
-            const heroes = await Guardian.findAll();
+
+            let getAllHeroQuery = {};
+
+            let paginatedQuery = {
+                limit: query.size,
+                offset: (query.page-1)*query.size
+            }
+            
+            if(query.page  && query.size){
+                console.log("running here")
+                getAllHeroQuery = paginatedQuery
+            }
+            
+            if(query.page == 0)  throw "PAGE NUMBER INVALID TRY AGAIN"
+
+            const heroes = await Guardian.findAll(
+                getAllHeroQuery
+            );
             if(heroes == null) throw "GET ALL FUNCTION RETURNED NULL";
+            return heroes;
+
+        } catch (error) {
+            console.log('something went wrong in repository layer');
+            throw {error};
+        }
+    }
+
+    async getInRange(query){
+        try {
+
+            let filter = [];
+
+            let minRange = parseFloat(query.minRange);
+            let maxRange = parseFloat(query.maxRange);
+
+
+            if(minRange){
+                filter.push({government_allowance: {[Op.gte] : minRange }})
+            }
+
+            if(maxRange){
+                filter.push({government_allowance: {[Op.lte] : maxRange}})
+            }
+
+
+            const heroes = await Guardian.findAll({
+                where: filter
+            });
+
+            if(heroes == null) throw "IN RANGE FUNCTION RETURNED NULL";
 
             return heroes;
 
@@ -73,6 +122,37 @@ class HeroRepository{
             console.log('something went wrong in repository layer');
             throw {error};
         }
+    }
+
+    async searchAllHeroes(query){
+
+        const searchResult = await Guardian.findAll(
+            {
+                where : {
+                    [Op.or] : [
+                        {
+                            name: {
+                                [Op.iLike]: `%${query.search}%`,
+                            },
+                        },
+                        {
+                            alias: {
+                                [Op.iLike]: `%${query.search}%`,
+                            },
+                        },
+                        
+                    ]
+                },
+                limit: query.size,
+                offset: (query.page-1)
+            }
+        );
+
+        // const searchResult = await Guardian.findAll();
+
+        if(searchResult == null) throw "GET ALL FUNCTION RETURNED NULL";
+
+        return searchResult;
     }
 }
     

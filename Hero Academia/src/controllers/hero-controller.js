@@ -56,9 +56,10 @@ const getAll = async(req, res) => {
 
     try {
 
-        // console.log(req.query);
-        const response = await heroService.getAllHeroes();
-        console.log(response);
+        console.log("im here");
+        const response = await heroService.getAllHeroes(req.query);
+        console.log("response", response);
+
 
         return res.status(200).json({
             data: response,
@@ -77,8 +78,6 @@ const getAll = async(req, res) => {
         });
     }
 }
-
-
 
 
 const update = async (req, res) => {
@@ -129,10 +128,63 @@ const destroy = async (req, res) => {
     }
 }
 
+const searchAll = async (req, res) => {
+
+    try {
+        const response = await heroService.searchAllHeroes(req.query);
+        console.log(response);
+
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "successfully searched data",
+            err: {}
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to Search the query request",
+            err: error
+        });
+    }
+}
+
+const getInRange = async (req, res) => {
+
+    try {
+        console.log(req.body)
+        const response = await heroService.getInRange(req.body);
+        console.log("response here", response);
+
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "successfully fetched in range data",
+            err: {}
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "not able to fetch data in range",
+            err: error
+        });
+    }
+}
+
+
+
 module.exports = {
     create, 
     get,
     getAll,
     update,
-    destroy
+    destroy,
+    searchAll,
+    getInRange
 }

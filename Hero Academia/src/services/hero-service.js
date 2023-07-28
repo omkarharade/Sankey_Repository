@@ -28,10 +28,21 @@ class HeroService{
         }
     }
 
-    async getAllHeroes(){
+    async getAllHeroes(query){
         
         try {
-            const heroes = await this.heroRepository.getAllHeroes();
+            const heroes = await this.heroRepository.getAllHeroes(query);
+            return heroes;
+        } catch (error) {
+            console.log("Something went wrong at service layer");
+			throw error;
+        }
+    }
+
+    async getInRange(query){
+        
+        try {
+            const heroes = await this.heroRepository.getInRange(query);
             return heroes;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -56,6 +67,17 @@ class HeroService{
             const updatedHero = await this.heroRepository.updateHero(id, data);
             console.log("id", id, "data",  data);
             return updatedHero;
+        } catch (error) {
+            console.log("Something went wrong at service layer");
+			throw error;
+        }
+    }
+
+    async searchAllHeroes(query){
+        
+        try {
+            const heroes = await this.heroRepository.searchAllHeroes(query);
+            return heroes;
         } catch (error) {
             console.log("Something went wrong at service layer");
 			throw error;
